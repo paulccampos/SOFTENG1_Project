@@ -2,7 +2,7 @@
 
 ## Navigation Structure
 
-The CivicFix system uses role-based navigation because different
+The RoadWatch system uses role-based navigation because different
 users perform different tasks within the infrastructure reporting
 and repair process.
 
@@ -75,7 +75,7 @@ timeline.
 
 ## Color Palette
 
-The CivicFix interface uses a dark navy and gold color palette
+The RoadWatch interface uses a dark navy and gold color palette
 to create a professional, modern, and public-service-oriented
 visual identity.
 
