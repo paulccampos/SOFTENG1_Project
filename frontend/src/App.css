@@ -34,13 +34,32 @@ h1{font-size:32px;margin:0 0 8px}
 .timeline span{margin-top:15px;color:#B8C4D3;font-size:12px}
 .audit p{border-bottom:1px solid #1D3656;padding:14px 0;color:#B8C4D3}
 .audit b{color:#D4AF37;margin-right:25px}
-@media(max-width:900px){
-  .sidebar{width:210px}
-  .main{padding:35px 25px}
-  .stats{grid-template-columns:1fr 1fr}
-  .form-grid{grid-template-columns:1fr}
-  .report-row{grid-template-columns:1fr}
-  .report-row button{text-align:left}
+@media (max-width: 900px){
+
+  .sidebar{
+    width:210px;
+  }
+
+  .main{
+    padding:35px 25px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .report-row{
+    grid-template-columns:1fr;
+  }
+
+  .report-row button{
+    text-align:left;
+  }
+
 }
 
 .auth-page{
@@ -124,4 +143,138 @@ background:#07152B;
 border:1px solid #28415F;
 color:white;
 border-radius:8px;
+}
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile-card{
+  max-width:500px;
+}
+
+.profile-card p{
+  margin:16px 0;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.small-btn{
+  width:auto;
+  min-width:120px;
+  padding:10px 16px;
+  font-size:14px;
+}
+
+button{
+  transition:.2s ease;
+}
+
+button:hover{
+  opacity:.9;
+}
+
+/* =========================
+   TABLES
+========================= */
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+.table th{
+  background:#07152B;
+  color:#D4AF37;
+  font-weight:700;
+}
+
+.table th,
+.table td{
+  padding:14px;
+  border-bottom:1px solid #1D3656;
+}
+
+.table tr:hover{
+  background:#112846;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  background:#07152B;
+  border:1px solid #28415F;
+  color:white;
+  border-radius:8px;
+}
+
+.search:focus{
+  outline:none;
+  border-color:#D4AF37;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal h2{
+  color:#D4AF37;
+}
+
+.modal p{
+  color:#B8C4D3;
+}
+
+/* =========================
+   AUTH PAGES
+========================= */
+
+.auth-card h1{
+  color:#D4AF37;
+  text-align:center;
+}
+
+.auth-card button{
+  justify-self:center;
+}
+
+.auth-card p{
+  text-align:center;
+}
+
+/* =========================
+   REPORT DETAILS
+========================= */
+
+.panel p{
+  line-height:1.7;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+::-webkit-scrollbar{
+  width:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:#07152B;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#28415F;
+  border-radius:8px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:#D4AF37;
 }

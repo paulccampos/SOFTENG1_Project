@@ -33,9 +33,9 @@ function Login({
             setRole(e.target.value)
           }
         >
-          <option>Citizen</option>
-          <option>Field Inspector</option>
-          <option>Administrator</option>
+          <option value="Citizen">Citizen</option>
+          <option value="Field Inspector">Field Inspector</option>
+          <option value="Administrator">Administrator</option>
         </select>
 
         <button
@@ -158,13 +158,16 @@ function Sidebar({
             "Profile"
           ].map(x =>
       <button key={x} className={active===x ? "nav active" : "nav"} onClick={()=>setActive(x)}>{x}</button>)}</nav>
-    <div className="account"><b>Citizen Account</b><span>citizen@example.com</span></div>
+    <div className="account">
+      <b>{role} Account</b>
+      <span>{role.toLowerCase().replace(/\s/g,"")}@roadwatch.com</span>
+    </div>
   </aside>
 }
 
-function Dashboard({setActive}) {
+function Dashboard({setActive, role}) {
   return <main className="main">
-    <h1>Hello, Citizen!</h1>
+    <h1>Hello, {role}!</h1>
     <p className="subtitle">Track infrastructure issues and follow their repair progress.</p>
     <section className="stats">
       <div><span>Total Reports</span><strong>12</strong></div>
@@ -587,10 +590,21 @@ Citizen submitted PF-0013
 export default function App() {
 
   const [active, setActive] = useState("Dashboard");
-  const [role, setRole] = useState("Citizen");
+
+  const [role, setRole] = useState(
+    localStorage.getItem("role") || "Citizen"
+  );
+
+  const [email, setEmail] = useState(
+    localStorage.getItem("email") || ""
+  );
+
+  const [password, setPassword] = useState("");
 
   const [authenticated, setAuthenticated] =
-    useState(false);
+    useState(
+      localStorage.getItem("authenticated") === "true"
+    );
 
   const [authPage, setAuthPage] =
     useState("login");
@@ -604,21 +618,106 @@ export default function App() {
 
       return (
         <>
-          <Login
-            setRole={setRole}
-            setAuthPage={setAuthPage}
-            onLogin={() => {
-              setModal("Login Successful");
-              setAuthenticated(true);
-            }}
-          />
+          <main className="auth-page">
+            <div className="auth-card">
+
+              <h1>RoadWatch Login</h1>
+
+              <input
+                type="email"
+                placeholder="Email Address"
+                value={email}
+                onChange={(e) =>
+                  setEmail(e.target.value)
+                }
+              />
+
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) =>
+                  setPassword(e.target.value)
+                }
+              />
+
+              <select
+                value={role}
+                onChange={(e) =>
+                  setRole(e.target.value)
+                }
+              >
+                <option value="Citizen">
+                  Citizen
+                </option>
+
+                <option value="Field Inspector">
+                  Field Inspector
+                </option>
+
+                <option value="Administrator">
+                  Administrator
+                </option>
+
+              </select>
+
+              <button
+                className="gold small-btn"
+                onClick={() => {
+
+                  localStorage.setItem(
+                    "role",
+                    role
+                  );
+
+                  localStorage.setItem(
+                    "email",
+                    email
+                  );
+
+                  localStorage.setItem(
+                    "authenticated",
+                    "true"
+                  );
+
+                  setModal(
+                    "Login Successful"
+                  );
+
+                  setAuthenticated(true);
+
+                }}
+              >
+                Login
+              </button>
+
+              <p>
+
+                Don't have an account?
+
+                <button
+                  className="link-btn"
+                  onClick={() =>
+                    setAuthPage("register")
+                  }
+                >
+                  Register
+                </button>
+
+              </p>
+
+            </div>
+          </main>
 
           {modal && (
             <SuccessModal
               message={modal}
-              onClose={() => setModal("")}
+              onClose={() =>
+                setModal("")
+              }
             />
           )}
+
         </>
       );
     }
@@ -631,6 +730,7 @@ export default function App() {
             setModal(
               "Account Created Successfully"
             );
+
             setAuthPage("login");
           }}
         />
@@ -638,9 +738,12 @@ export default function App() {
         {modal && (
           <SuccessModal
             message={modal}
-            onClose={() => setModal("")}
+            onClose={() =>
+              setModal("")
+            }
           />
         )}
+
       </>
     );
   }
@@ -655,12 +758,17 @@ export default function App() {
       />
 
       {active === "Dashboard" &&
-        <Dashboard setActive={setActive} />
+        <Dashboard
+          setActive={setActive}
+          role={role}
+        />
       }
 
       {active === "Submit Report" &&
         role === "Citizen" &&
-        <SubmitReport setActive={setActive} />
+        <SubmitReport
+          setActive={setActive}
+        />
       }
 
       {active === "My Reports" &&
@@ -683,12 +791,62 @@ export default function App() {
       }
 
       {active === "Profile" &&
+
         <main className="main">
+
           <h1>Profile</h1>
+
           <p className="subtitle">
             Account settings
           </p>
+
+          <section className="panel">
+
+            <h2>User Information</h2>
+
+            <p>
+              <b>Role:</b> {role}
+            </p>
+
+            <p>
+              <b>Email:</b> {email}
+            </p>
+
+            <button
+              className="gold small-btn"
+              onClick={() => {
+
+                localStorage.removeItem(
+                  "role"
+                );
+
+                localStorage.removeItem(
+                  "email"
+                );
+
+                localStorage.removeItem(
+                  "authenticated"
+                );
+
+                setRole("Citizen");
+
+                setEmail("");
+
+                setAuthenticated(false);
+
+                setActive(
+                  "Dashboard"
+                );
+
+              }}
+            >
+              Logout
+            </button>
+
+          </section>
+
         </main>
+
       }
 
     </div>
