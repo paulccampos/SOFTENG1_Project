@@ -7,7 +7,11 @@ const reports = [
   ["Flooded drainage", "Barangay Central", "Completed"],
 ];
 
-function Login({ onLogin, setAuthPage }) {
+function Login({
+  onLogin,
+  setAuthPage,
+  setRole
+}) {
   return (
     <main className="auth-page">
       <div className="auth-card">
@@ -23,6 +27,16 @@ function Login({ onLogin, setAuthPage }) {
           type="password"
           placeholder="Password"
         />
+
+        <select
+          onChange={(e) =>
+            setRole(e.target.value)
+          }
+        >
+          <option>Citizen</option>
+          <option>Field Inspector</option>
+          <option>Administrator</option>
+        </select>
 
         <button
           className="gold small-btn"
@@ -119,17 +133,30 @@ function SuccessModal({
   );
 }
 
-function Sidebar({active,setActive}) {
+function Sidebar({
+  role,
+  active,
+  setActive
+}) {
   return <aside className="sidebar">
     <div className="brand">ROADWATCH<span>PUBLIC INFRASTRUCTURE MONITOR</span></div>
     <nav>{[
-      "Dashboard",
-      "Submit Report",
-      "My Reports",
-      "Field Inspector",
-      "Administrator",
-      "Profile"
-    ].map(x =>
+            "Dashboard",
+
+            ...(role === "Citizen"
+              ? ["Submit Report", "My Reports"]
+              : []),
+
+            ...(role === "Field Inspector"
+              ? ["Field Inspector"]
+              : []),
+
+            ...(role === "Administrator"
+              ? ["Administrator"]
+              : []),
+
+            "Profile"
+          ].map(x =>
       <button key={x} className={active===x ? "nav active" : "nav"} onClick={()=>setActive(x)}>{x}</button>)}</nav>
     <div className="account"><b>Citizen Account</b><span>citizen@example.com</span></div>
   </aside>
@@ -171,9 +198,9 @@ function Dashboard({setActive}) {
 
     <td>
     <button
-    onClick={() =>
-    setActive("My Reports")
-    }
+    onClick={()=>{
+    setActive("Report Details");
+    }}
     >
     View Details
     </button>
@@ -217,7 +244,10 @@ function SubmitReport({setActive}) {
         <label>Description<textarea placeholder="Describe the damage or issue"/></label>
         <label>Location<input placeholder="Landmark / street / barangay"/></label>
         <label>Photo Evidence<input type="file" accept="image/png,image/jpeg"/></label>
-        <button className="gold" type="submit">Submit Report</button>
+        <button
+          className="gold small-btn"
+          type="submit"
+        >Submit Report</button>
       </form>
       <aside className="panel"><h2>Submission flow</h2><p>1. Submit report</p><p>2. Inspector verifies</p><p>3. Crew is assigned</p><p>4. Repair is tracked</p></aside>
     </section>
@@ -237,6 +267,82 @@ function Tracking() {
       <p><b>Sep 21 • 14:30</b> Repair started — Crew Supervisor</p>
     </section>
   </main>
+}
+
+function ReportDetails(){
+
+return(
+
+<main className="main">
+
+<h1>Report Details</h1>
+
+<p className="subtitle">
+Infrastructure Damage Report
+</p>
+
+<section className="panel">
+
+<h2>Report Information</h2>
+
+<p>
+<b>Report ID:</b>
+PF-0012
+</p>
+
+<p>
+<b>Issue:</b>
+Large Pothole
+</p>
+
+<p>
+<b>Location:</b>
+Barangay Commonwealth
+</p>
+
+<p>
+<b>Status:</b>
+In Progress
+</p>
+
+<p>
+<b>Description:</b>
+Large pothole near school zone
+creating traffic delays.
+</p>
+
+</section>
+
+<section className="panel">
+
+<h2>Evidence</h2>
+
+<p>
+Photo evidence placeholder
+</p>
+
+</section>
+
+<section className="panel">
+
+<h2>Repair Timeline</h2>
+
+<div className="timeline">
+
+<span>Reported</span>
+<span>Verified</span>
+<span>Assigned</span>
+<span>In Progress</span>
+<span>Completed</span>
+
+</div>
+
+</section>
+
+</main>
+
+);
+
 }
 
 function InspectorDashboard() {
@@ -273,6 +379,45 @@ Verify submitted reports
 <section className="panel">
 
 <h2>Verification Queue</h2>
+
+<section className="panel">
+
+<h2>Submitted Reports</h2>
+
+<table className="table">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Citizen</th>
+<th>Location</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>PF-0012</td>
+<td>Juan Dela Cruz</td>
+<td>Commonwealth</td>
+<td>Pending</td>
+</tr>
+
+<tr>
+<td>PF-0013</td>
+<td>Maria Santos</td>
+<td>Malaya</td>
+<td>Verified</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
 
 <input
 className="search"
@@ -379,7 +524,47 @@ return (
 
 <section className="panel audit">
 
-<h2>Audit History</h2>
+<section className="panel">
+
+<h2>Audit Logs</h2>
+
+<table className="table">
+
+<thead>
+
+<tr>
+<th>Date</th>
+<th>User</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>Sep 24</td>
+<td>Inspector</td>
+<td>Verified PF-0012</td>
+</tr>
+
+<tr>
+<td>Sep 24</td>
+<td>Citizen</td>
+<td>Submitted PF-0013</td>
+</tr>
+
+<tr>
+<td>Sep 24</td>
+<td>Admin</td>
+<td>Assigned Repair Crew</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
 
 <p>
 <b>Sep 24</b>
@@ -401,112 +586,111 @@ Citizen submitted PF-0013
 
 export default function App() {
 
-const [active,setActive] =
-useState("Dashboard");
+  const [active, setActive] = useState("Dashboard");
+  const [role, setRole] = useState("Citizen");
 
-const [authenticated,
-setAuthenticated] =
-useState(false);
+  const [authenticated, setAuthenticated] =
+    useState(false);
 
-const [authPage,
-setAuthPage] =
-useState("login");
+  const [authPage, setAuthPage] =
+    useState("login");
 
-const [modal,
-setModal] =
-useState("");
+  const [modal, setModal] =
+    useState("");
 
-if(!authenticated){
+  if (!authenticated) {
 
-if(authPage==="login"){
+    if (authPage === "login") {
 
-return (
+      return (
+        <>
+          <Login
+            setRole={setRole}
+            setAuthPage={setAuthPage}
+            onLogin={() => {
+              setModal("Login Successful");
+              setAuthenticated(true);
+            }}
+          />
 
-<>
+          {modal && (
+            <SuccessModal
+              message={modal}
+              onClose={() => setModal("")}
+            />
+          )}
+        </>
+      );
+    }
 
-<Login
-setAuthPage={setAuthPage}
-onLogin={()=>{
-setModal("Login Successful");
-setAuthenticated(true);
-}}
-/>
+    return (
+      <>
+        <Register
+          setAuthPage={setAuthPage}
+          onRegister={() => {
+            setModal(
+              "Account Created Successfully"
+            );
+            setAuthPage("login");
+          }}
+        />
 
-{modal &&
-<SuccessModal
-message={modal}
-onClose={() =>
-setModal("")
-}
-/>
-}
+        {modal && (
+          <SuccessModal
+            message={modal}
+            onClose={() => setModal("")}
+          />
+        )}
+      </>
+    );
+  }
 
-</>
+  return (
+    <div className="app">
 
-);
+      <Sidebar
+        role={role}
+        active={active}
+        setActive={setActive}
+      />
 
-}
+      {active === "Dashboard" &&
+        <Dashboard setActive={setActive} />
+      }
 
-return (
+      {active === "Submit Report" &&
+        role === "Citizen" &&
+        <SubmitReport setActive={setActive} />
+      }
 
-<Register
-setAuthPage={setAuthPage}
-onRegister={()=>{
-alert(
-"Account Created"
-);
-setAuthPage("login");
-}}
-/>
+      {active === "My Reports" &&
+        role === "Citizen" &&
+        <Tracking />
+      }
 
-);
+      {active === "Report Details" &&
+        <ReportDetails />
+      }
 
-}
+      {active === "Field Inspector" &&
+        role === "Field Inspector" &&
+        <InspectorDashboard />
+      }
 
-return (
+      {active === "Administrator" &&
+        role === "Administrator" &&
+        <AdminDashboard />
+      }
 
-<div className="app">
+      {active === "Profile" &&
+        <main className="main">
+          <h1>Profile</h1>
+          <p className="subtitle">
+            Account settings
+          </p>
+        </main>
+      }
 
-<Sidebar
-active={active}
-setActive={setActive}
-/>
-
-{active==="Dashboard" &&
-<Dashboard
-setActive={setActive}
-/>
-}
-
-{active==="Submit Report" &&
-<SubmitReport
-setActive={setActive}
-/>
-}
-
-{active==="My Reports" &&
-<Tracking/>
-}
-
-{active==="Field Inspector" &&
-<InspectorDashboard/>
-}
-
-{active==="Administrator" &&
-<AdminDashboard/>
-}
-
-{active==="Profile" &&
-<main className="main">
-<h1>Profile</h1>
-<p className="subtitle">
-Account settings
-</p>
-</main>
-}
-
-</div>
-
-);
-
+    </div>
+  );
 }
