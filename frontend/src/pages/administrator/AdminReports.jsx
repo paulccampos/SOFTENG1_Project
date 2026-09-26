@@ -402,34 +402,6 @@ export default function AdminReports({
           </section>
         )}
 
-        <section className="panel">
-          <h2>User Management</h2>
-
-          <div className="table-container">
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Role</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user.email}>
-                    <td>
-                      {user.firstName}{" "}
-                      {user.lastName}
-                    </td>
-                    <td>{user.role}</td>
-                    <td>Active</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
       </div>
 
       {selectedReport && (
@@ -491,4 +463,3 @@ export default function AdminReports({
     </main>
   );
 }
-
