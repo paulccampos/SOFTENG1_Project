@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    GLOBAL
 ========================================================= */
 
@@ -640,6 +640,19 @@ button {
   background: rgba(244, 162, 97, 0.12);
 
   color: #F4A261;
+}
+
+.status-under-review,
+.status-needs-information {
+  background: rgba(244, 162, 97, 0.12);
+
+  color: #F4A261;
+}
+
+.status-verified {
+  background: rgba(89, 174, 119, 0.12);
+
+  color: #79D69A;
 }
 
 .status-ongoing {
@@ -1457,17 +1470,95 @@ button {
   font-size: 11px;
 }
 
+.timeline-item small {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #8FA1B7;
+
+  font-size: 10px;
+  line-height: 1.45;
+}
+
+.timeline-item .timeline-note {
+  margin-top: 10px;
+
+  color: #B8C4D2;
+
+  overflow-wrap: anywhere;
+}
+
 
 /* =========================================================
    INSPECTOR
 ========================================================= */
 
 .inspector-table {
-  min-width: 900px;
+  min-width: 980px;
 }
 
 .queue-panel {
   margin-top: 20px;
+}
+
+.verified-panel {
+  margin-top: 20px;
+}
+
+.closed-panel {
+  margin-top: 20px;
+}
+
+.closed-panel .section-heading {
+  margin-bottom: 0;
+}
+
+.closed-panel .empty-state {
+  padding: 24px 0 4px;
+  color: #8FA1B7;
+  font-size: 12px;
+}
+
+.verified-panel .empty-state {
+  min-height: 130px;
+  padding: 28px 20px;
+}
+
+.verified-panel .empty-state h3 {
+  margin: 0 0 8px;
+  color: #F4F7FA;
+  font-size: 15px;
+}
+
+.verified-panel .empty-state p {
+  margin: 0;
+  color: #8FA1B7;
+  font-size: 12px;
+}
+
+.secondary-stats {
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  margin-top: -6px;
+}
+
+.secondary-stats > div {
+  min-height: 105px;
+}
+
+.inspector-stats > div {
+  min-width: 0;
+}
+
+.inspector-stats span,
+.inspector-stats small {
+  line-height: 1.4;
+}
+
+.inspector-stats strong {
+  line-height: 1;
 }
 
 .detail-page-header {
@@ -1511,6 +1602,12 @@ button {
   color: #8FA1B7;
 
   text-align: center;
+}
+
+.large-evidence p {
+  margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
 }
 
 .evidence-icon {
@@ -1639,6 +1736,59 @@ button {
   color: #64758A;
 }
 
+.inspection-summary {
+  border-color: rgba(89, 174, 119, 0.35);
+}
+
+.inspection-summary .section-heading {
+  margin-bottom: 22px;
+}
+
+.inspection-readonly-note {
+  margin: 20px 0 0;
+  padding-top: 15px;
+  border-top: 1px solid #1D3656;
+  color: #8FA1B7;
+  font-size: 12px;
+}
+
+.inspector-detail-grid .panel {
+  min-width: 0;
+}
+
+.inspector-detail-grid .detail-list {
+  margin-top: 20px;
+}
+
+.inspector-detail-grid .detail-list p {
+  grid-template-columns: 92px minmax(0, 1fr);
+}
+
+.panel > label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 15px;
+  color: #F4F7FA;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.panel > label select {
+  width: 100%;
+  padding: 11px 12px;
+  background: #07152B;
+  color: #F4F7FA;
+  border: 1px solid #1D3656;
+  border-radius: 8px;
+  outline: none;
+}
+
+.panel > label select:focus {
+  border-color: #F4A261;
+  box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.08);
+}
+
 .action-panel {
   display: flex;
 
@@ -1664,6 +1814,10 @@ button {
   justify-content: flex-end;
 
   gap: 9px;
+}
+
+.action-buttons button {
+  white-space: nowrap;
 }
 
 
@@ -1752,6 +1906,136 @@ button {
   text-transform: uppercase;
 }
 
+.report-preview {
+  border-color: rgba(244, 162, 97, 0.35);
+}
+
+.report-preview .detail-list p {
+  grid-template-columns: 110px minmax(0, 1fr);
+}
+
+.report-filter-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.report-filter-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 180px;
+  color: #F4F7FA;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.report-filter-form input {
+  padding: 11px 12px;
+  background: #07152B;
+  color: #F4F7FA;
+  border: 1px solid #1D3656;
+  border-radius: 8px;
+  outline: none;
+}
+
+.report-filter-form input:focus {
+  border-color: #F4A261;
+  box-shadow: 0 0 0 3px rgba(244, 162, 97, 0.08);
+}
+
+.print-report-table {
+  width: 100%;
+  margin-top: 22px;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.print-report-table th,
+.print-report-table td {
+  padding: 9px;
+  border: 1px solid #999;
+  text-align: left;
+  vertical-align: top;
+}
+
+.print-report-table th {
+  background: #eee;
+}
+
+.printable-report {
+  display: none;
+}
+
+.print-report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 24px;
+  margin: 25px 0;
+}
+
+.printable-report h2 {
+  margin: 24px 0 8px;
+}
+
+.printable-report p {
+  line-height: 1.6;
+}
+
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+
+  .sidebar,
+  .main > .no-print {
+    display: none !important;
+  }
+
+  .app,
+  .main {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  .printable-report {
+    display: block;
+    padding: 24px;
+    color: black;
+  }
+
+  .printable-report h1,
+  .printable-report h2,
+  .printable-report p,
+  .printable-report strong {
+    color: black;
+  }
+
+  .printable-report .eyebrow {
+    color: #8A5A00;
+  }
+
+  .print-report-grid {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    padding: 14px 0;
+  }
+
+  .print-report-table {
+    color: black;
+  }
+
+  .print-report-table th,
+  .print-report-table td {
+    color: black;
+  }
+}
+
 
 /* =========================================================
    RESPONSIVE - TABLET
@@ -1783,6 +2067,10 @@ button {
 
   .inspector-detail-grid {
     grid-template-columns: 1fr;
+  }
+
+  .inspector-table {
+    min-width: 980px;
   }
 }
 
@@ -1838,6 +2126,24 @@ button {
 
   .action-buttons {
     justify-content: flex-start;
+  }
+
+  .secondary-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .action-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .action-buttons button {
+    width: 100%;
   }
 }
 
@@ -1937,6 +2243,22 @@ button {
 
   .citizen-info-grid {
     grid-template-columns: 1fr;
+  }
+
+  .inspector-detail-grid {
+    gap: 14px;
+  }
+
+  .panel {
+    padding: 18px;
+  }
+
+  .large-evidence {
+    min-height: 220px;
+  }
+
+  .map-placeholder {
+    min-height: 170px;
   }
 
   .two-column {
